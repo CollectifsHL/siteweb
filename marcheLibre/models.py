@@ -65,14 +65,14 @@ class Choix():
     distances = ['5', '10', '20', '30', '50', '100']
 
     statut_adhesion = (('', '-----------'),
-                     (0, _("Je souhaite devenir membre de l'association 'CollectifsHL' et utiliser le site")),
-                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre du collectif des Collectifs HL")),
+                     (0, _("Je souhaite devenir membre du collectif  et utiliser le site")),
+                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre du collectif des Collectifs Hameaux Legers")),
                     (2, _("Je suis déjà membre du Collectif")))
 
     statut_adhesion_rtg = (('', '-----------'),
-                     (0, _("Je souhaite devenir membre de l'association 'Ramene Ta Graine' et utiliser le site")),
-                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre de l'association RTG")),
-                    (2, _("Je suis déjà membre de l'association Ramene Ta Graine")))
+                     (0, _("Je souhaite devenir membre du collectif 'Ramene Ta Graine' et utiliser le site")),
+                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre du collectif RTG")),
+                    (2, _("Je suis déjà membre du collectif Ramene Ta Graine")))
 
 def get_categorie_from_subcat(subcat):
     for type_produit, dico in Choix.choix.items():
@@ -202,7 +202,7 @@ class Profil(AbstractUser):
     @property
     def statutMembre_str(self):
         if self.statut_adhesion == 0:
-            return "souhaite devenir membre de l'association"
+            return "souhaite devenir membre du collectif"
         elif self.statut_adhesion == 1:
             return "ne souhaite pas devenir membre"
         elif self.statut_adhesion == 2:
@@ -215,7 +215,7 @@ class Profil(AbstractUser):
     @property
     def statutMembre_rtg_str(self):
         if self.statut_adhesion_rtg == 0:
-            return "souhaite devenir membre de l'association"
+            return "souhaite devenir membre du collectif"
         elif self.statut_adhesion_rtg == 1:
             return "ne souhaite pas devenir membre"
         elif self.statut_adhesion_rtg == 2:
