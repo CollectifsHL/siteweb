@@ -65,7 +65,7 @@ class Choix():
     distances = ['5', '10', '20', '30', '50', '100']
 
     statut_adhesion = (('', '-----------'),
-                     (0, _("Je souhaite devenir membre de l'association 'PermaCat' et utiliser le site")),
+                     (0, _("Je souhaite devenir membre de l'association 'CollectifsHL' et utiliser le site")),
                     (1, _("Je souhaite utiliser le site, mais ne pas devenir membre de l'association CollectifsHL")),
                     (2, _("Je suis déjà membre de l'association CollectifsHL")))
 
@@ -522,9 +522,9 @@ def on_save_produits(instance, created, **kwargs):
         suivi, created = Suivis.objects.get_or_create(nom_suivi='produits')
         titre = "[CollectifsHL] nouveau produit"
         message = " Une nouvelle offre a été postée sur le marché " + \
-                  "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + instance.get_absolute_url() + \
+                  "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + instance.get_absolute_url() + \
                   "\n------------------------------------------------------------------------------" \
-                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://www.perma.cat"
+                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://collectifshl.herokuapp.com"
         emails = [suiv.email for suiv in followers(suivi) if instance.auteur != suiv  and (instance.estPublique or suiv.is_collectifshl)]
         try:
             send_mass_mail([(titre, message, SERVER_EMAIL, emails), ])
@@ -538,9 +538,9 @@ def on_save_produits(instance, created, **kwargs):
         suivi, created = Suivis.objects.get_or_create(nom_suivi='produits')
         titre = "[CollectifsHL] nouveau produit"
         message = " Une nouvelle offre a été postée sur le marché " + \
-                  "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + instance.get_absolute_url() + \
+                  "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + instance.get_absolute_url() + \
                   "\n------------------------------------------------------------------------------" \
-                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://www.perma.cat"
+                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://collectifshl.herokuapp.com"
         emails = [suiv.email for suiv in followers(suivi) if instance.auteur != suiv and (instance.estPublique or suiv.is_collectifshl)]
         try:
             send_mass_mail([(titre, message, SERVER_EMAIL, emails), ])
@@ -554,9 +554,9 @@ def on_save_produits(instance, created, **kwargs):
         suivi, created = Suivis.objects.get_or_create(nom_suivi='produits')
         titre = "[CollectifsHL] nouveau produit"
         message = " Une nouvelle offre a été postée sur le marché " + \
-                  "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + instance.get_absolute_url() + \
+                  "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + instance.get_absolute_url() + \
                   "\n------------------------------------------------------------------------------" \
-                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://www.perma.cat"
+                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://collectifshl.herokuapp.com"
         emails = [suiv.email for suiv in followers(suivi) if instance.auteur != suiv  and (instance.estPublique or suiv.is_collectifshl)]
         try:
             send_mass_mail([(titre, message, SERVER_EMAIL, emails), ])
@@ -570,9 +570,9 @@ def on_save_produits(instance, created, **kwargs):
         suivi, created = Suivis.objects.get_or_create(nom_suivi='produits')
         titre = "[CollectifsHL] nouveau produit"
         message = " Une nouvelle offre a été postée sur le marché " + \
-                  "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + instance.get_absolute_url() + \
+                  "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + instance.get_absolute_url() + \
                   "\n------------------------------------------------------------------------------" \
-                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://www.perma.cat"
+                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://collectifshl.herokuapp.com"
         emails = [suiv.email for suiv in followers(suivi) if instance.auteur != suiv  and (instance.estPublique or suiv.is_collectifshl)]
         try:
             send_mass_mail([(titre, message, SERVER_EMAIL, emails), ])
@@ -585,9 +585,9 @@ def on_save_produits(instance, created, **kwargs):
         suivi, created = Suivis.objects.get_or_create(nom_suivi='produits')
         titre = "[CollectifsHL] nouveau produit"
         message = " Une nouvelle offre a été postée sur le marché " + \
-                  "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + instance.get_absolute_url() + \
+                  "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + instance.get_absolute_url() + \
                   "\n------------------------------------------------------------------------------" \
-                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://www.perma.cat"
+                  "\n vous recevez cet email, car vous avez choisi de suivre le marché sur le site http://collectifshl.herokuapp.com"
         emails = [suiv.email for suiv in followers(suivi) if instance.user != suiv  and (instance.estPublique or suiv.is_collectifshl)]
         if emails:
             try:

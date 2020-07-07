@@ -92,7 +92,7 @@ def lireVotation(request, slug):
     except:
         vote = None
     if not votation.estPublic and not request.user.is_collectifshl:
-        return render(request, 'notCollectifsHL.html',)
+        return render(request, 'notMembre.html',)
 
     commentaires = Commentaire.objects.filter(votation=votation).order_by("date_creation")
 
@@ -160,7 +160,7 @@ class ModifierCommentaireVotation(UpdateView):
 def voter(request, slug):
     votation = get_object_or_404(Votation, slug=slug)
     if not votation.estPublic and not request.user.is_collectifshl:
-        return render(request, 'notCollectifsHL.html',)
+        return render(request, 'notMembre.html',)
 
     if votation.get_statut[0] != 0:
         return render(request, 'vote/voteTermine.html',)

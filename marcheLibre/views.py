@@ -203,7 +203,7 @@ def detailProduit(request, produit_id):
         raise Http404
 
     if not prod.estPublique and not request.user.is_collectifshl:
-        return render(request, 'notCollectifsHL.html',)
+        return render(request, 'notMembre.html',)
     return render(request, 'marcheLibre/produit_detail.html', {'produit': prod})
 
 
@@ -248,7 +248,7 @@ def annuaire(request):
 @login_required
 def annuaire_collectifshl(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
 
     profils_collectifshl = Profil.objects.filter(accepter_annuaire=True, statut_adhesion=2).order_by('username')
     nb_profils = len(Profil.objects.filter(statut_adhesion=2))
@@ -266,7 +266,7 @@ def annuaire_rtg(request):
 @login_required
 def listeContacts(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
     listeMails = [
         {"type":'user_newsletter' ,"profils":Profil.objects.filter(inscrit_newsletter=True), "titre":"Liste des inscrits à la newsletter : "},
          {"type":'anonym_newsletter' ,"profils":InscriptionNewsletter.objects.all(), "titre":"Liste des inscrits anonymes à la newsletter : "},
@@ -289,7 +289,7 @@ def listeContacts_rtg(request):
 @login_required
 def listeFollowers(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
     listeArticles = []
     for art in Article.objects.all():
         suiveurs = followers(art)
@@ -315,7 +315,7 @@ def carte(request):
 @login_required
 def admin_asso(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
 
     listeFichers = [
         {"titre": "Télécharger le bilan comptable", "url": "{{STATIC_ROOT]]/admin/coucou.txt"},
@@ -339,7 +339,7 @@ def presentation_asso(request):
 @login_required
 def telechargements_asso(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
 
     fichiers = [{'titre' : 'Contrat credit mutuel', 'url': static('doc/contrat_credit_mutuel.pdf'),},
                 {'titre' : 'Procès verbal de constitution', 'url': static('doc/PV_constitution.pdf'),},
@@ -357,7 +357,7 @@ def adhesion_asso(request):
 @login_required
 def carte_collectifshl(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
     profils = Profil.objects.filter(statut_adhesion=2, accepter_annuaire=1)
     return render(request, 'carte_cooperateurs.html', {'profils':profils, 'titre': "Carte des adhérents CollectifsHL*" } )
 
@@ -428,9 +428,9 @@ def contact_admins(request):
             mail_admins(sujet, message_txt, html_message=message_html)
             if form.cleaned_data['renvoi']:
                 if request.user.is_anonymous:
-                    send_mail(sujet, "Vous avez envoyé aux administrateurs du site www.perma.cat le message suivant : " + message_html, form.cleaned_data['email'], [form.cleaned_data['email'],], fail_silently=False, html_message=message_html)
+                    send_mail(sujet, "Vous avez envoyé aux administrateurs du site www.CollectifsHLle message suivant : " + message_html, form.cleaned_data['email'], [form.cleaned_data['email'],], fail_silently=False, html_message=message_html)
                 else:
-                    send_mail(sujet, "Vous avez envoyé aux administrateurs du site www.perma.cat le message suivant : " + message_html, request.user.email, [request.user.email,], fail_silently=False, html_message=message_html)
+                    send_mail(sujet, "Vous avez envoyé aux administrateurs du site www.CollectifsHLle message suivant : " + message_html, request.user.email, [request.user.email,], fail_silently=False, html_message=message_html)
 
             return render(request, 'contact/message_envoye.html', {'sujet': sujet, 'msg': message_html,
                                                    'envoyeur': envoyeur ,
@@ -1029,7 +1029,7 @@ def agora(request, ):
 @login_required
 def agora_collectifshl(request, ):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
     messages = MessageGeneralCollectifsHL.objects.all().order_by("date_creation")
     form = MessageGeneralCollectifsHLForm(request.POST or None)
     if form.is_valid():
@@ -1131,7 +1131,7 @@ def inscription_newsletter(request):
 @login_required
 def contacter_newsletter(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
 
     if request.method == 'POST':
         form = ContactForm(request.POST or None, )
@@ -1165,7 +1165,7 @@ def contacter_newsletter(request):
 @login_required
 def contacter_adherents(request):
     if not request.user.is_collectifshl:
-        return render(request, "notCollectifsHL.html")
+        return render(request, "notMembre.html")
 
     if request.method == 'POST':
         form = ContactForm(request.POST or None, )

@@ -63,7 +63,7 @@ if not LOCALL:
     #X_FRAME_OPTIONS = 'DENY'
     SESSION_EXPIRE_AT_BROWSER_CLOSE=False
 
-ALLOWED_HOSTS = ['collectifshl.herokuapp.com', 'www.perma.cat']
+ALLOWED_HOSTS = ['collectifshl.herokuapp.com', 'collectifshl.herokuapp.com']
 
 # Application definition
 
@@ -268,7 +268,7 @@ IGNORABLE_404_URLS = (
 )
 
 # Email settings
-SERVER_EMAIL = 'sitecollectifshl@gmail.com'
+SERVER_EMAIL = 'collectifshl@gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 try:
@@ -280,14 +280,14 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 GMAIL_SMTP_USER = 'sitecollectifshl@gmail.com'
-EMAIL_SUBJECT_PREFIX = "[PermaCat]"
+EMAIL_SUBJECT_PREFIX = "[CollectifsHL]"
 try:
     GMAIL_SMTP_PASSWORD = os.environ['EMAIL_ADMIN_PWD']
 except:
     GMAIL_SMTP_PASSWORD = 'test'
 
 ADMINS = (
-    ('Asso_admin', 'sitecollectifshl@gmail.com'),
+    ('Asso_admin', 'collectifshl@gmail.com'),
 )
 MANAGERS = ADMINS
 BASE_URL = "https://collectifshl.herokuapp.com"

@@ -107,8 +107,7 @@ urlpatterns = [
 
     # url(r'^list$', views.product_list),
     #     url(r'^list2/$', FilterView.as_view(model=Produit, filterset_class=ProductFilter,)),
-    url(r'^marcheLibre/$', login_required(views.ListeProduit.as_view()),  name="marcheLibre"),
-    url(r'^marcheLibre/lister/$', login_required(views.ListeProduit.as_view()),  name="marcheLibre"),
+    url(r'^marcheLibre/lister/$', login_required(views.ListeProduit.as_view()),  name="marche"),
     url(r'^marcheLibre/supprimerProduits_expires_confirmation/$', views.supprimerProduits_expires_confirmation,  name="supprimerProduits_expires_confirmation"),
     url(r'^marcheLibre/supprimerProduits_expires/$', views.supprimerProduits_expires,  name="supprimerProduits_expires"),
     url(r'^marcheLibre/lister_offres/', login_required(views.ListeProduit_offres.as_view()),

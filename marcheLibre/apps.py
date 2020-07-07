@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-class BourseLibreConfig(AppConfig):
+class MarcheLibreConfig(AppConfig):
     name = 'marcheLibre'
 
     def ready(self):

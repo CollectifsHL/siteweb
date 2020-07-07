@@ -1,1 +1,1 @@
-default_app_config = 'marcheLibre.apps.BourseLibreConfig'
+default_app_config = 'marcheLibre.apps.MarcheLibreConfig'

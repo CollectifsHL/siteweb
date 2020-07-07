@@ -82,7 +82,7 @@ class SupprimerArticle(DeleteView):
 def lireArticle(request, slug):
     article = get_object_or_404(Article, slug=slug)
     if not article.estPublic and not request.user.is_collectifshl:
-        return render(request, 'notCollectifsHL.html',)
+        return render(request, 'notMembre.html',)
 
     commentaires = Commentaire.objects.filter(article=article).order_by("date_creation")
     dates = Evenement.objects.filter(article=article).order_by("start_time")
@@ -244,7 +244,7 @@ def lireProjet(request, slug):
     projet = get_object_or_404(Projet, slug=slug)
 
     if not projet.estPublic and not request.user.is_collectifshl:
-        return render(request, 'notCollectifsHL.html',)
+        return render(request, 'notMembre.html',)
 
     commentaires = CommentaireProjet.objects.filter(projet=projet).order_by("date_creation")
     actions = action_object_stream(projet)
@@ -271,9 +271,9 @@ def envoi_emails_articleouprojet_modifie(articleOuProjet, message, flag_article)
 
     titre = "[CollectifsHL] Article actualisé" if flag_article else "[CollectifsHL] Projet actualisé"
     message =  message +\
-              "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + articleOuProjet.get_absolute_url() + \
+              "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + articleOuProjet.get_absolute_url() + \
               "\n\n------------------------------------------------------------------------------" \
-              "\n Pour vous désabonner cliquez sur la cloche sur http://www.Perma.Cat/forum/articles/" if flag_article else "\n Pour vous désabonner cliquez sur la cloche sur http://www.Perma.Cat/forum/projets/"
+              "\n Pour vous désabonner cliquez sur la cloche sur http://collectifshl.herokuapp.com/forum/articles/" if flag_article else "\n Pour vous désabonner cliquez sur la cloche sur http://collectifshl.herokuapp.com/forum/projets/"
    # emails = [(titre, message, SERVER_EMAIL, (suiv.email, )) for suiv in followers(instance)]
     emails = [suiv.email for suiv in followers(articleOuProjet)  if articleOuProjet.auteur != suiv  and (articleOuProjet.estPublic or suiv.is_collectifshl)]
 
@@ -532,27 +532,27 @@ def ajouterEvenementArticle(request, id):
     return render(request, 'blog/ajouterEvenement.html', {'form': form, })
 
 
-def changerArticles_jardin(request):
-    from jardinpartage.models import Article as Art_jardin, Commentaire as Comm_jardin
-    articles = Article.objects.filter(categorie="Jardin")
-    for article in articles:
-        new_art = Art_jardin.objects.create(categorie='Discu',
-                                titre = article.titre,
-                                auteur = article.auteur,
-                                slug = article.slug,
-                                contenu = article.contenu,
-                                date_creation = article.date_creation,
-                                date_modification = article.date_modification,
-                                estPublic = article.estPublic,
-                                estModifiable = article.estModifiable,
-                            
-                                date_dernierMessage = article.date_dernierMessage,
-                                dernierMessage = article.dernierMessage,
-                                estArchive = article.estArchive,)
-        commentaires = Commentaire.objects.filter(article=article)
-        for commentaire in commentaires:
-            new = Comm_jardin.objects.create(auteur_comm = commentaire.auteur_comm, commentaire = commentaire.commentaire,
-                                     article = new_art, date_creation= commentaire.date_creation)
-        article.delete()
-
-    return render(request, 'blog/accueil.html')
+# def changerArticles_jardin(request):
+#     from jardinpartage.models import Article as Art_jardin, Commentaire as Comm_jardin
+#     articles = Article.objects.filter(categorie="Jardin")
+#     for article in articles:
+#         new_art = Art_jardin.objects.create(categorie='Discu',
+#                                 titre = article.titre,
+#                                 auteur = article.auteur,
+#                                 slug = article.slug,
+#                                 contenu = article.contenu,
+#                                 date_creation = article.date_creation,
+#                                 date_modification = article.date_modification,
+#                                 estPublic = article.estPublic,
+#                                 estModifiable = article.estModifiable,
+#
+#                                 date_dernierMessage = article.date_dernierMessage,
+#                                 dernierMessage = article.dernierMessage,
+#                                 estArchive = article.estArchive,)
+#         commentaires = Commentaire.objects.filter(article=article)
+#         for commentaire in commentaires:
+#             new = Comm_jardin.objects.create(auteur_comm = commentaire.auteur_comm, commentaire = commentaire.commentaire,
+#                                      article = new_art, date_creation= commentaire.date_creation)
+#         article.delete()
+#
+#     return render(request, 'blog/accueil.html')

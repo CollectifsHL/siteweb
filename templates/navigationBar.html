@@ -38,10 +38,10 @@
             <ul class="dropdown-menu dropdown-menu1 nav2-dropdown" id="dropdownForum">
                 <li> <a class="dropdown-item" href="{% url 'blog:index' %}?">Articles</a></li>
                 <li class="divider" role="separator"></li>
-                <li><a class="dropdown-item" href="{% url 'agora_general' %}">Salon</a></li>
+                <li><a class="dropdown-item" href="{% url 'agora_general' %}">Salon Public</a></li>
 
 {% if user.is_collectifshl %}
-                <li> <a class="dropdown-item" href="{% url 'agora_collectifshl' %}"> Salon PermaCat</a></li>
+                <li> <a class="dropdown-item" href="{% url 'agora_collectifshl' %}"> Salon des Collectifs</a></li>
 {% endif %}
                 <li class="divider" role="separator"></li>
                  <li><a class="dropdown-item" href="{% url 'conversations' %}"> Conversations privées</a></li>
@@ -60,9 +60,8 @@
 {% endif %}
                        <li class="divider" role="separator"></li>
                         {% comment %} <li><a class="dropdown-item" href="{% url 'wiki:root' %}"> Eco Village </a></li>{% endcomment %}
-                         <li><a class="dropdown-item" href="{% url 'fiches:acceuil' %}"><i class='fa fa-image iconleft' ></i> Fiches de Permaculture </a></li>
+                         <li><a class="dropdown-item" href="{% url 'fiches:acceuil' %}"><i class='fa fa-image iconleft' ></i> Fiches </a></li>
                          <li><a class="dropdown-item" href="{% url 'ateliers:acceuil' %}"><i class='fa fa-wrench iconleft' ></i>  Ateliers Collectifs</a></li>
-                         <li><a class="dropdown-item" href="{% url 'jardinpartage:index' %}"><i class='fa fa-pagelines' ></i> Jardins Partagés </a></li>
 
                        <li class="divider" role="separator"></li>
                         <li> <a class="dropdown-item" href="{% url 'annuaire_collectifshl' %}"> Annuaire  </a></li>
@@ -71,8 +70,7 @@
                         <li class="divider" role="separator"></li>
                        <li> <a class="dropdown-item" href="{% url 'presentation_asso' %}"> Qui sommes nous ?</a></li>
                        <li> <a class="dropdown-item" href="{% url 'charte' %}"> Charte </a></li>
-                       <li> <a class="dropdown-item" href="{% url 'statuts' %}"> Statuts et règlement intérieur </a></li>
-                        <li class="divider" role="separator"></li>
+                          <li class="divider" role="separator"></li>
                        <li> <a class="dropdown-item" href="{% url 'adhesion_asso' %}"> Cotisation en ligne </a></li>
 
                 </ul>
@@ -98,9 +96,8 @@
                <li> <a class="dropdown-item" href="{% url 'cgu' %}"> CGU </a></li>
                <li> <a class="dropdown-item" href="{% url 'liens' %}"> Liens </a></li>
                <li> <a class="dropdown-item" href="{% url 'contact_admins' %}"> Contacter admins </a></li>
-                <li class="divider" role="separator"></li>
-               <li> <a class="dropdown-item" href="{% url 'fairedon' %}"> Faire un don</a></li>
-         <li class="nav-item">
+
+                    <li class="nav-item">
              <form class="form-inline my-2 my-lg-0 justify-content-center form-group navbar-form " action="{% url 'chercher' %}" method="get" role = "search">
         {% csrf_token %}
             <input class="form-control fmr-sm-2" name="id_recherche" placeholder="" type="text">
@@ -131,10 +128,8 @@
                 <ul class="dropdown-menu nav3-dropdown" aria-labelledby="navbarDropdownMenuLink" id="dropdownAssoAnonyme">
                        <li> <a class="dropdown-item" href="{% url 'presentation_asso' %}"> Qui sommes nous ?</a></li>
                        <li> <a class="dropdown-item" href="{% url 'charte' %}"> Charte </a></li>
-                       <li> <a class="dropdown-item" href="{% url 'statuts' %}"> Statuts et règlement intérieur </a></li>
-                        <li class="divider" role="separator"></li>
-                       <li> <a class="dropdown-item" href="{% url 'adhesion_asso' %}"> Cotisation/don en ligne </a></li>
-                </ul>
+                       <li> <a class="dropdown-item" href="{% url 'adhesion_asso' %}"> Cotisation en ligne </a></li>
+               </ul>
             </li>
 
         <li class="nav-item dropdown nav2">
@@ -146,8 +141,7 @@
                     <li class="divider" role="separator"></li>
                <li> <a class="dropdown-item" href="{% url 'cgu' %}"> CGU </a></li>
                     <li class="divider" role="separator"></li>
-               <li> <a class="dropdown-item" href="{% url 'fairedon' %}"> Faire un don</a></li>
-            </ul>
+                           </ul>
         </li>
     </ul>
 

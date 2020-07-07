@@ -91,7 +91,7 @@ class Article(models.Model):
                 message = " Un nouvel article a été créé " + \
                           "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                           "\n\n------------------------------------------------------------------------------" \
-                          "\n vous recevez cet email, car vous avez choisi de suivre les articles (en cliquant sur la cloche) sur le site http://www.Perma.Cat/forum/articles/"
+                          "\n vous recevez cet email, car vous avez choisi de suivre les articles (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com/forum/articles/"
                 emails = [suiv.email for suiv in followers(suivi) if
                           self.auteur != suiv and (self.estPublic or suiv.is_collectifshl)]
                 if emails and not DEBUG:
@@ -103,9 +103,9 @@ class Article(models.Model):
             if sendMail:
                 titre = "[CollectifsHL] Article actualisé"
                 message = "L'article '" + self.titre + "' a été modifié" + \
-                          "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + self.get_absolute_url() + \
+                          "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                           "\n\n------------------------------------------------------------------------------" \
-                          "\n vous recevez cet email, car vous avez choisi de suivre cet article sur le site http://www.Perma.Cat/forum/articles/"
+                          "\n vous recevez cet email, car vous avez choisi de suivre cet article sur le site http://collectifshl.herokuapp.com/forum/articles/"
 
                 emails = [suiv.email for suiv in followers(self) if
                           self.auteur != suiv and (self.estPublic or suiv.is_collectifshl)]
@@ -175,7 +175,7 @@ class Commentaire(models.Model):
             message = " Un article auquel vous êtes abonné a été commenté " + \
                       "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.article.get_absolute_url() + \
                       "\n\n------------------------------------------------------------------------------" \
-                      "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://www.Perma.Cat/forum/articles/" + self.article.get_absolute_url()
+                      "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com/forum/articles/" + self.article.get_absolute_url()
             emails = [suiv.email for suiv in followers(self.article) if
                       self.auteur_comm != suiv and (self.article.estPublic or suiv.is_collectifshl)]
             if emails and not DEBUG:
@@ -232,7 +232,7 @@ class Projet(models.Model):
             message = " Le projet '" +  self.titre + "' a été créé"+ \
                       "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                       "\n\n------------------------------------------------------------------------------" \
-                      "\n vous recevez cet email, car vous avez choisi de suivre ce projet sur le site http://www.Perma.Cat/forum/projets/"
+                      "\n vous recevez cet email, car vous avez choisi de suivre ce projet sur le site http://collectifshl.herokuapp.com/forum/projets/"
             suivi, created = Suivis.objects.get_or_create(nom_suivi='projets')
             emails = [suiv.email for suiv in followers(suivi) if self.auteur != suiv  and (self.estPublic or suiv.is_collectifshl)]
 
@@ -245,9 +245,9 @@ class Projet(models.Model):
             if sendMail:
                 titre = "[CollectifsHL] Projet actualisé"
                 message = "Le projet '" + self.titre + "' a été modifié" + \
-                          "\n Vous pouvez y accéder en suivant ce lien : http://www.perma.cat" + self.get_absolute_url() + \
+                          "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                           "\n\n------------------------------------------------------------------------------" \
-                          "\n vous recevez cet email, car vous avez choisi de suivre ce projet sur le site http://www.Perma.Cat/forum/articles/"
+                          "\n vous recevez cet email, car vous avez choisi de suivre ce projet sur le site http://collectifshl.herokuapp.com/forum/articles/"
 
                 emails = [suiv.email for suiv in followers(self) if
                           self.auteur != suiv and (self.estPublic or suiv.is_collectifshl)]
@@ -292,7 +292,7 @@ class CommentaireProjet(models.Model):
             message = "Le projet '"+ self.projet.titre + "' auquel vous êtes abonné a été commenté " + \
                       "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.projet.get_absolute_url() + \
                       "\n\n------------------------------------------------------------------------------" \
-                      "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://www.Perma.Cat/forum/articles/" + self.projet.get_absolute_url()
+                      "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com/forum/articles/" + self.projet.get_absolute_url()
 
             emails = [suiv.email for suiv in followers(self.projet) if
                       self.auteur_comm != suiv and (self.projet.estPublic or suiv.is_collectifshl)]

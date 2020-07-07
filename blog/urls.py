@@ -56,7 +56,7 @@ urlpatterns = [
         name='modifierCommentaireProjet'),
 
     url(r'ajouterEvenement/$', views.ajouterEvenement, name='ajouterEvenement'),
-    url(r'transfereArticlesJardin/$', views.changerArticles_jardin, name='transfereArticlesJardin'),
+#    url(r'transfereArticlesJardin/$', views.changerArticles_jardin, name='transfereArticlesJardin'),
     url(r'ajouterEvenementArticle/(?P<id>[0-9]+)$', views.ajouterEvenementArticle, name='ajouterEvenementArticle'),
 
 ]
