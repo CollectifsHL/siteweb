@@ -1,0 +1,128 @@
+{% extends 'base_forum.html' %}
+{% load static %}
+{% load blog_filters %}
+{% load fontawesome %}
+
+{% load activity_tags %}
+    {%block header %}
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+    {%endblock%}
+{% block title %} - Forum {% endblock  %}
+{%block subtitle%}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12 textcenter">
+            <h3>Articles du Forum</h3>
+            <hr>
+        </div>
+    </div>
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-expand-sm navbar-light bg-light">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="navbar-nav">
+<li class="nav-item dropdown">
+                            <a class="nav-item dropdown-toggle" href="#" id="navbarDropdownCategorie" data-toggle="dropdown">
+                                 <button type="button" class="btn  btn-primary" >
+                                {% if request.GET.categorie  %}
+      Catégorie : {{categorie_courante}}
+      {%elif request.GET.permacat %}
+      Articles Permacat
+      {%elif request.GET.auteur %}
+      Articles de {{request.GET.auteur}}
+      {%elif typeFiltre == 'archives' %}
+      Archives
+        {%else%}
+        Choisir une catégorie...
+      {%endif%}
+                                 </button>
+                                </a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class=" dropdown-item " style="background:white;" href="{%url 'blog:index' %}">Toutes les catégories</a>
+                                <div class="dropdown-divider"></div>
+            {% for categorie_id, cat_nom, cat_coul in categorie_list %}
+            <a class=" dropdown-item " style="background:{{cat_coul}};" href="?categorie={{categorie_id}}"><span>{{cat_nom}}</span></a>
+            {% endfor %}
+    <div class="dropdown-divider"></div>
+                                                                <a class=" dropdown-item " style="background:grey;" href="?archives=True"><span>Archives</span></a>
+
+							</div>
+						</li>
+
+
+                <li class="nav-item dropdown">
+                      <a class="nav-item dropdown-toggle btn-block" href="#" id="menuOrdreTri" data-toggle="dropdown">
+
+                <button class="btn btn-light">
+                   Trier par...
+           </button>
+                      </a>
+                <div class="dropdown-menu"  aria-labelledby="menuOrdreTri"  id="idOrdreTri">
+                    {% for titre, ordre in ordreTriPossibles.items %}
+                     <a class="dropdown-item"  href="?{{ request.GET.urlencode }}&ordreTri={{ordre}}">{{titre}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+					</ul>
+
+                        <ul class="navbar-nav ml-md-auto">
+
+
+                            <li class="nav-item">
+                            <a href="{% url 'blog:ajouterNouvelArticle' %}">
+        <button type="button" class="btn  btn-success" >
+                <i class="fa fa-plus"></i> Ajouter un article
+            </button>
+                            </a>&ensp;</li>
+                            <li class="nav-item">
+                                    <a href="{% url 'blog:suivre_articles' %}">
+
+        {% if request.user|is_following:suivis %}
+        <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Vous êtes abonné : Cliquez pour arreter de recevoir un mail à chaque nouvel article">
+             {% fontawesome_icon 'bell' %}
+        </button>
+        {% else %}
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Vous n'êtes pas abonné : Cliquez pour recevoir un mail à chaque nouvel article">
+             {% fontawesome_icon 'bell-slash' %}
+        </button>
+        {% endif %}
+            </a>
+                            </li>
+                <li class="nav-item">
+                <a href="{% url 'blog:suiveursArticles' %}">
+                    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Voir abonnés">
+                         {% fontawesome_icon 'eye' %}
+                    </button>
+                </a>
+                </li>
+                        </ul>
+</div>
+			</nav>
+		</div>
+	</div>
+</div>
+
+
+{%endblock%}
+{% block content %}
+
+<div class="infinite-container">
+    {% for article in article_list %}
+    <div class="infinite-item">
+            {% include "blog/article_template.html" with article=article %}
+    <hr>
+    </div>
+
+    {% endfor %}
+</div>
+{%include 'pagination.html' %}
+
+    {%if not request.user.is_permacat %}
+<p class="textcenter"><small>(vous n'avez pas encore accès aux articles "Permacat"... Rejoignez-nous !)</small></p>
+    {%endif%}
+{% endblock %}

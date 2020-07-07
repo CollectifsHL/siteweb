@@ -1,0 +1,19 @@
+{% extends 'base_forum.html' %}
+{% load blog_filters %}
+{%block message%}{%endblock%}
+{% block subtitle %}
+
+<div class="row">
+<div class="col-sm-12 textcenter">
+    <h3>Salon de discussion CollectifsHL</h3>
+</div>
+</div>
+<hr>
+
+{% endblock %}
+{% block content %}
+
+{% include 'salon.html' %}
+
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% extends 'base_profil.html' %}
+{% block navbar%}
+{% endblock %}
+{% block content %}
+<h2 class="textcenter">Merci pour votre intérêt. Votre compte a été créé!
+    </h2>
+<p>
+{%if user.is_permacat %}
+Comme vous êtes un membre de l'association permacat, votre compte doit être validé par l'administrateur avant d'être disponible.
+Contactez l'administrateur du site, en cas de souci.
+{%else%}
+Vous pouvez consulter les annonces, en publier, et discuter avec les autres !
+
+ <a href="{% url 'login' %}">
+        <button type="button" class="btn btn-secondary" >
+               Se connecter...
+            </button>
+{%endif%}
+</p>
+{% endblock %}

@@ -1,0 +1,181 @@
+{% load fontawesome %}
+{% load static %}
+{% block navBar %}
+
+<nav class="navbar navbar-light bs-dark navbar-expand-xl navbarMenu dropdown-toggle1">
+    <div class="container-fluid">
+        <button class="navbar-toggler navbar-btn" type="button" data-toggle="collapse" data-target="#navbarsActuel" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'bienvenue' %}"><img  src="{% static 'favicon.ico' %}" width="30" height="30" alt="acceuil"/></a>
+        <div class="navbar-collapse collapse justify-content-between  align-items-center w-100"  id="navbarsActuel">
+
+{% if user.is_authenticated %}
+    <ul class="nav navbar-nav  d-flex justify-content-between  w-100">
+      <li class="nav-item dropdown nav1">
+          <a data-toggle="dropdown" class="nav-link dropdown-toggle navbar-menu  " href="{% url 'marche' %}"  aria-haspopup="true" aria-expanded="false">
+              {% fontawesome_icon 'shopping-basket' %}
+              Altermarché
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu1 nav1-dropdown" id="dropdownAnnonces">
+            <li><a  class=" dropdown-item" href="{% url 'marche' %}">Toutes les annonces</a></li>
+           <li class="divider" role="separator"></li>
+             <li><a  class="dropdown-item" href="{% url 'marche_offres' %}">Offres</a></li>
+            <li><a class=" dropdown-item" href="{% url 'marche_recherches' %}">Demandes</a></li>
+           <li class="divider" role="separator"></li>
+            <li> <a class=" dropdown-item" href="{% url 'marche' %}?producteur={{ user.username }}">Mes annonces</a></li>
+               <li> <a class="dropdown-item" href="{% url 'afficher_requetes' %}">Mes requêtes</a></li>
+           <li class="divider" role="separator"></li>
+            <li> <a class="dropdown-item" href="{% url 'produit_proposer_entree' %}"> <i class="fa fa-plus"></i> Ajouter une annonce</a></li>
+
+        </ul>
+      </li>
+      <li class="nav-item dropdown nav2">
+           <a data-toggle="dropdown" class="nav-link dropdown-toggle navbar-menu  " href="{% url 'blog:forum' %}" aria-haspopup="true" aria-expanded="false" >
+               {% fontawesome_icon 'comments' %} Forum </a>
+
+            <ul class="dropdown-menu dropdown-menu1 nav2-dropdown" id="dropdownForum">
+                <li> <a class="dropdown-item" href="{% url 'blog:index' %}?">Articles</a></li>
+                <li class="divider" role="separator"></li>
+                <li><a class="dropdown-item" href="{% url 'agora_general' %}">Salon</a></li>
+
+{% if user.is_collectifshl %}
+                <li> <a class="dropdown-item" href="{% url 'agora_collectifshl' %}"> Salon PermaCat</a></li>
+{% endif %}
+                <li class="divider" role="separator"></li>
+                 <li><a class="dropdown-item" href="{% url 'conversations' %}"> Conversations privées</a></li>
+            </ul>
+      </li>
+
+            <li class="nav-item dropdown nav3">
+                <a class="nav-link dropdown-toggle navbar-menu "  href="{% url 'presentation_asso' %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% fontawesome_icon 'link' %} CollectifsHL
+                </a>
+                <ul class="dropdown-menu dropdown-menu1 nav3-dropdown" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="{% url 'blog:index_projets' %}"><i class='fa fa-paper-plane iconleft' ></i>  Projets </a></li>
+
+{% if user.is_collectifshl %}
+                    <li><a class="dropdown-item" href="{% url 'vote:index' %}"><i class="fas fa-vote-yea"></i>  Votes </a></li>
+{% endif %}
+                       <li class="divider" role="separator"></li>
+                        {% comment %} <li><a class="dropdown-item" href="{% url 'wiki:root' %}"> Eco Village </a></li>{% endcomment %}
+                         <li><a class="dropdown-item" href="{% url 'fiches:acceuil' %}"><i class='fa fa-image iconleft' ></i> Fiches de Permaculture </a></li>
+                         <li><a class="dropdown-item" href="{% url 'ateliers:acceuil' %}"><i class='fa fa-wrench iconleft' ></i>  Ateliers Collectifs</a></li>
+                         <li><a class="dropdown-item" href="{% url 'jardinpartage:index' %}"><i class='fa fa-pagelines' ></i> Jardins Partagés </a></li>
+
+                       <li class="divider" role="separator"></li>
+                        <li> <a class="dropdown-item" href="{% url 'annuaire_collectifshl' %}"> Annuaire  </a></li>
+                         <li><a class="dropdown-item" href="{% url 'carte_collectifshl' %}"> Carte  </a></li>
+                         <li><a class="dropdown-item" href="{% url 'admin_asso' %}"> Administration  </a></li>
+                        <li class="divider" role="separator"></li>
+                       <li> <a class="dropdown-item" href="{% url 'presentation_asso' %}"> Qui sommes nous ?</a></li>
+                       <li> <a class="dropdown-item" href="{% url 'charte' %}"> Charte </a></li>
+                       <li> <a class="dropdown-item" href="{% url 'statuts' %}"> Statuts et règlement intérieur </a></li>
+                        <li class="divider" role="separator"></li>
+                       <li> <a class="dropdown-item" href="{% url 'adhesion_asso' %}"> Cotisation en ligne </a></li>
+
+                </ul>
+            </li>
+
+   {% if request.user.is_superuser %}
+        {% load admin_urls %}
+        <li class="nav-item nav4"><a class="nav-link" href="{% url 'admin:index' %}">admin</a></li>
+        {% endif %}
+ <li class="nav-item nav4 "><a class="nav-link" href="{% url 'cal:agenda' %}">{% fontawesome_icon 'calendar' %}  Agenda</a></li>
+
+      <li class="nav-item nav5"><a class="nav-link" href="{% url 'notifications_news' %}">{% fontawesome_icon 'bell' %}  Notifications</a></li>
+
+        <li class="nav-item dropdown nav6">
+            <a class="nav-link dropdown-toggle navbar-menu " href="dropdoownSite" id="navbarAbout2" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" >
+             {% fontawesome_icon 'globe' %} Site
+            </a>
+            <ul class="dropdown-menu dropdown-menu1 nav6-dropdown" aria-labelledby="navbarAbout2" id="dropdoownSite">
+               <li> <a class="dropdown-item" href="{% url 'annuaire' %}"> Annuaire </a></li>
+                <li> <a class="dropdown-item" href="{% url 'carte' %}"> Carte </a></li>
+                <li class="divider" role="separator"></li>
+               <li> <a class="dropdown-item" href="{% url 'faq' %}"> FAQ </a></li>
+               <li> <a class="dropdown-item" href="{% url 'cgu' %}"> CGU </a></li>
+               <li> <a class="dropdown-item" href="{% url 'liens' %}"> Liens </a></li>
+               <li> <a class="dropdown-item" href="{% url 'contact_admins' %}"> Contacter admins </a></li>
+                <li class="divider" role="separator"></li>
+               <li> <a class="dropdown-item" href="{% url 'fairedon' %}"> Faire un don</a></li>
+         <li class="nav-item">
+             <form class="form-inline my-2 my-lg-0 justify-content-center form-group navbar-form " action="{% url 'chercher' %}" method="get" role = "search">
+        {% csrf_token %}
+            <input class="form-control fmr-sm-2" name="id_recherche" placeholder="" type="text">
+            <span class="input-group-append">
+                <button class="btn navbar-btn btn-light my-2 my-sm-0" type="submit" data-toggle="tooltip" data-placement="bottom" title="Rechercher sur le site...">{% fontawesome_icon 'search' %}</button>
+            </span>
+        </form>
+         </li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown nav7">
+           <a data-toggle="dropdown" class="nav-link dropdown-toggle  navbar-menu" href="{% url 'profil_courant' %}" aria-haspopup="true" aria-expanded="false"  >
+              {% fontawesome_icon 'user' %} Profil: {{request.user}} </a>
+            <ul class="dropdown-menu dropdown-menu1 nav7-dropdown" aria-labelledby="navbarDropdownMenuLink">
+               <li> <a class="dropdown-item" href="{% url 'profil_courant' %}">Mon profil</a></li>
+                <li class="divider" role="separator"></li>
+               <li> <a class="dropdown-item" href="{% url 'logout' %}">Se déconnecter</a></li>
+            </ul>
+        </li>
+    </ul>
+{% else %}
+
+    <ul class="nav navbar-nav mr-auto navbar-left">
+            <li class="nav-item dropdown nav3">
+
+                <a href="" class="nav-link dropdown-toggle navbar-menu"  id="navbarDropdownMenuLink_anonyme" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    L'association CollectifsHL </a>
+                <ul class="dropdown-menu nav3-dropdown" aria-labelledby="navbarDropdownMenuLink" id="dropdownAssoAnonyme">
+                       <li> <a class="dropdown-item" href="{% url 'presentation_asso' %}"> Qui sommes nous ?</a></li>
+                       <li> <a class="dropdown-item" href="{% url 'charte' %}"> Charte </a></li>
+                       <li> <a class="dropdown-item" href="{% url 'statuts' %}"> Statuts et règlement intérieur </a></li>
+                        <li class="divider" role="separator"></li>
+                       <li> <a class="dropdown-item" href="{% url 'adhesion_asso' %}"> Cotisation/don en ligne </a></li>
+                </ul>
+            </li>
+
+        <li class="nav-item dropdown nav2">
+            <a class="nav-link dropdown-toggle navbar-menu" href="{% url 'profil_courant' %}" id="navbarAbout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Le site
+            </a>
+            <ul class="dropdown-menu dropdown-menu1  nav2-dropdown" aria-labelledby="navbarAbout">
+               <li> <a class="dropdown-item" href="{% url 'contact_admins' %}"> Nous contacter</a></li>
+                    <li class="divider" role="separator"></li>
+               <li> <a class="dropdown-item" href="{% url 'cgu' %}"> CGU </a></li>
+                    <li class="divider" role="separator"></li>
+               <li> <a class="dropdown-item" href="{% url 'fairedon' %}"> Faire un don</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav ">
+        <li class="nav-item nav4 "><a class="nav-link" href="https://collectifshl.herokuapp.com/auth/login/"> {% fontawesome_icon 'user' %} Se connecter</a></li>
+        <li class="nav-item nav5 "><a class="nav-link" href="https://collectifshl.herokuapp.com/register/"> {% fontawesome_icon 'address-card' %} S'inscrire</a></li>
+
+    </ul>
+{% endif %}
+</div>
+    </div>
+</nav>
+<script>
+$('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+  if (!$(this).next().hasClass('show')) {
+    $(this).parents('.dropdown-menu').first().find('.show').removeClass('show');
+  }
+  var $subMenu = $(this).next('.dropdown-menu');
+  $subMenu.toggleClass('show');
+
+
+  $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+    $('.dropdown-submenu .show').removeClass('show');
+  });
+
+
+  return false;
+});
+</script>
+{% endblock %}
+

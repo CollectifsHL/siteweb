@@ -1,0 +1,217 @@
+{% extends 'blog/baseBlog_asso.html' %}
+{% load static %}
+{% load blog_filters %}
+{% load fontawesome %}
+{% load activity_tags %}
+{% block subtitle %}
+<div class="row">
+    <div class="col-md-2">
+        <p>
+        <a  href="{% url 'blog:index_projets'  %}">
+        <button class="btn btn-info btn-sm" ><i class="fa fa-arrow-left"></i> Sommaire</button>
+            </a>
+        </p>
+    </div>
+    <div class="col-md-8">
+        <p class="infos  textepetit">Dans: <a href="{% url 'blog:index_projets'  %}?categorie={{projet.categorie}}"  style="background-color:{{projet.get_couleur}}">{{ projet.get_categorie_display }}</a>, rédigé par <a href="{% url 'profil' projet.auteur.id %}"> {{ projet.auteur.username }}</a>, le {{ projet.date_creation|date:"DATE_FORMAT" }}
+
+
+        <a href="{% url 'blog:suivre_projet' projet.slug %}">
+            {% if request.user|is_following:projet %}
+            <button type="button" class="btn btn-light btn-sm" data-toggle="tooltip" data-placement="bottom" title="Vous êtes abonné : Cliquez pour arreter de recevoir des notifications concernant ce projet par mail">
+                 {% fontawesome_icon 'bell' %} Suivi
+            </button>
+            {% else %}
+            <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Vous n'êtes pas abonné : Cliquez pour recevoir les notifications concernant ce projet par mail">
+                 {% fontawesome_icon 'bell-slash' %} Non suivi
+            </button>
+            {% endif %}
+        </a>
+            {% if request.user.is_superuser %}
+        <a href="{% url 'blog:suiveursProjet' projet.slug %}">
+            <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Voir qui est abonné tifications concernant cet article par mail">
+                 {% fontawesome_icon 'eye' %}
+            </button>
+        </a>
+            {% endif %}
+        </p>
+    </div>
+    <div class="col-md-2">
+        <p>
+        {%if projet.auteur == request.user%}
+		<div class="btn-group">
+
+            <a href="{% url 'blog:modifierProjet' slug=projet.slug %}">
+               <button type="button" class="btn btn-sm btn-warning">
+               &nbsp;Modifier
+               </button></a>
+            <a href="{% url 'blog:supprimerProjet' slug=projet.slug %}">
+               <button type="button" class="btn btn-sm btn-danger">
+               &nbsp;Supprimer
+               </button></a>
+		</div>
+        {%endif%}
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+{% block content %}
+<div class="contenu article">
+<div class="row " >
+	<div class="col-sm-6">
+            <span class="badge {% if projet.estPublic%}badge-warning{%else%} badge-success {%endif%}">
+                Projet {%if projet.estPublic%}  public {%else%}  permacat  {%endif%}
+            </span>
+
+            {% if article.estArchive%}
+            <span class="badge badge-secondary">
+                archivé
+            </span>
+            {%endif%}
+	</div>
+	<div class="col-sm-6 textright">
+               <button type="button" class="btn btn-sm btn-warning">
+                <span class="glyphicon glyphicon-plus"></span>&nbsp;Statut : {{ projet.get_statut_display }}
+               </button>
+         <p>
+            <button type="button" class="btn" data-toggle="modal" data-target="#historique">
+              {% fontawesome_icon 'bell' %} Historique
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="historique" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog textcenter" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                      <div class="row justify-content-center">
+                          <div class="col col-sm-12">
+                      <h5 >Historique</h5>
+                          </div>
+                      </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="contenu historique" id="idHistorique">
+                      {%for action in actions %}
+                            {% include "notifications/notifications_template3.html" with action=action%}
+                      {%endfor%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </p>
+	</div>
+</div>
+<div class="row">
+      <h3 style="text-indent: 30px;">{{ projet.titre }}</h3>
+</div>
+    <hr>
+<div class="row">
+<div class="col">
+    {{ projet.contenu|safe}}
+</div>
+</div>
+<hr>
+    <div class="col-sm-12 paddingbase">
+		<table class="table table-condensed ">
+			<tbody>
+                    {% if projet.coresponsable%}
+				<tr>
+					<td class="nomProprieteProduit">
+						Référent :
+					</td>
+					<td class="proprieteProduit">
+						{{ projet.coresponsable}}
+					</td>
+				</tr>
+                    {% endif %}
+				<tr>
+					<td class="nomProprieteProduit">
+						Type de projet :
+					</td>
+					<td class="proprieteProduit">
+						{{ projet.get_categorie_display }}
+					</td>
+				</tr>
+
+                <tr>
+					<td class="nomProprieteProduit">
+						Dernière modification :
+					</td>
+					<td class="proprieteProduit">
+						{{ projet.date_modification |date:"DATE_FORMAT"}}
+					</td>
+				</tr>
+                    {% if projet.lien_document%}
+                <tr>
+					<td class="nomProprieteProduit">
+						Document en ligne :
+					</td>
+					<td class="proprieteProduit">
+						{{ projet.lien_document}}
+					</td>
+				</tr>
+                    {% endif %}
+
+                    {% if projet.fichier_projet%}
+                <tr>
+					<td class="nomProprieteProduit">
+						Fichiers : {{ projet.fichier_projet}}
+					</td>
+					<td class="proprieteProduit">
+                        <a  href="{{ projet.fichier_projet.url}}" download>
+                            <button class="btn btn-info btn-sm textcenter">	{{ projet.fichier_projet.name}}</button>
+                            </a>
+
+					</td>
+				</tr>
+                <tr>
+					<td class="nomProprieteProduit">
+						Date de téléversement :
+					</td>
+					<td class="proprieteProduit">
+						{{ projet.date_fichier}}
+					</td>
+				</tr>
+                    {% endif %}
+                    {%if request.user.is_permacat%}
+                        {% if projet.lien_vote%}
+                        <tr>
+                            <td class="nomProprieteProduit">
+                                Lien pour voter :
+                            </td>
+                            <td class="proprieteProduit">
+                                {{ projet.lien_vote}}
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endif %}
+                {%if projet.end_time or projet.start_time%}
+                <tr>
+                    <td class="nomProprieteProduit">Date</td>
+                    <td class="proprieteProduit">
+
+              <a href="{% url 'cal:agenda' %} ">
+                {%if projet.end_time and projet.start_time != projet.end_time %}
+                    Du {{ projet.start_time|date:"d/m/Y"  }} au {{ projet.end_time|date:"d/m/Y"  }}
+                    {%else%}
+                    le {{ projet.start_time|date:"d/m/Y"  }}
+
+                {% endif %}</td>
+                </tr>
+            {% endif %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<hr>
+
+{% include 'commentaires.html' %}
+
+{% endblock %}

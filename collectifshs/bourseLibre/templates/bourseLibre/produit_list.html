@@ -1,0 +1,185 @@
+{% extends 'base_altermarche.html' %}
+    {% load static %}
+{% load activity_tags %}
+{% load fontawesome %}
+
+{% block header %}
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+{% endblock %}
+
+{% block title %} - Au Marché {% endblock %}
+
+{%block subtitle%}
+<div class="row justify-content-center">
+    <nav class="navbar navbar-expand-md justify-content-center  navbar-light bg-light">
+        <div class="navbar-header">
+             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProduit" aria-controls="navbarProduitContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span></button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarProduit">
+            <ul class="nav navbar-nav">
+                <li class="nav-item dropdown active">
+                <button class="btn btn-info dropdown-toggle btn-block" type="button" id="menuOffreOuDemande" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{typeOffre}}
+                  </button>
+                <div class="dropdown-menu"  aria-labelledby="menuOffreOuDemande">
+                     <a class="dropdown-item"  href="{%url 'marche' %}">Tout</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item"  href="{% url 'marche_offres' %}">Offres-></a>
+                     <a class="dropdown-item"  href="{% url 'marche_recherches' %}"><-Demandes</a>
+                     <a class="dropdown-item"  href="{% url 'marche' %}?expire=1">Expiré</a>
+                </div>
+                </li>
+            <li class="nav-item" >
+                <a href="?"> <button class="btn btn-block {% if typeFiltre == 'aucun' %}btn-primary {%endif%}">Tout </button>
+                </a>
+            </li>
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle btn-block {% if categorie_parent == 'aliment' %}btn-primary {%endif%}" type="button" id="menuAliment" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {%if souscategorie and categorie_parent == 'aliment'%}{{souscategorie}}{%else%}Aliment {%endif%}</button>
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="menuAliment">
+                     <a class="dropdown-item"  href="?categorie=aliment">tous</a>
+                    <div class="dropdown-divider"></div>
+                    {% for souscat in choixPossibles.aliment.souscategorie %}
+                     <a class="dropdown-item"  href="?souscategorie={{souscat}}">{{souscat}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle btn-block {% if categorie_parent == 'vegetal' %}btn-primary {%endif%}" type="button" id="menuvegetal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {%if souscategorie and categorie_parent == 'vegetal'%}{{souscategorie}}{%else%}Végétal {%endif%}</button>
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="menuvegetal">
+                     <a class="dropdown-item"  href="?categorie=vegetal">tous</a>
+                    <div class="dropdown-divider"></div>
+                    {% for souscat in choixPossibles.vegetal.souscategorie %}
+                     <a class="dropdown-item"  href="?souscategorie={{souscat}}">{{souscat}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle btn-block {% if categorie_parent == 'service' %}btn-primary {%endif%}" type="button" id="menuservice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {%if souscategorie and categorie_parent == 'service'%}{{souscategorie}}{%else%}Service {%endif%}</button>
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="menuservice">
+                     <a class="dropdown-item"  href="?categorie=service">tous</a>
+                    <div class="dropdown-divider"></div>
+                    {% for souscat in choixPossibles.service.souscategorie %}
+                     <a class="dropdown-item"  href="?souscategorie={{souscat}}">{{souscat}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle btn-block {% if categorie_parent == 'objet' %}btn-primary {%endif%}" type="button" id="menuobjet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {%if souscategorie and categorie_parent == 'objet'%}{{souscategorie}}{%else%}Objet {%endif%}</button>
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="menuobjet">
+                     <a class="dropdown-item"  href="?categorie=objet">tous</a>
+                    <div class="dropdown-divider"></div>
+                    {% for souscat in choixPossibles.objet.souscategorie %}
+                     <a class="dropdown-item"  href="?souscategorie={{souscat}}">{{souscat}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+
+
+            {%if producteur_list %}
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle  btn-block {% if request.GET.producteur %}btn-primary{%endif%}" type="button" id="menuproducteur" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   {% if request.GET.producteur %} Par: {{request.GET.producteur}} {%else%}Producteur{%endif%}
+           </button>
+                <div class="dropdown-menu"  aria-labelledby="menuProducteur"  id="idProducteur">
+                    {% for producteur in producteur_list %}
+                      <a class="dropdown-item" href="?producteur={{producteur}}">{{producteur}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+        {%endif%}
+
+
+        {% if request.user.is_permacat or request.user.is_rtg %}
+            <li class="nav-item dropdown active">
+             <button type="button" class="btn btn-block {% if request.GET.permacat %}btn-primary{%endif%}  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               data-target = "#idPermacat">
+                {% if request.GET.permacat %}{% if request.GET.permacat == "True" %}Permacat {%else%}Public{%endif%}{%else%}Statut{%endif%}
+              </button>
+                <div class="dropdown-menu"  aria-labelledby="menuStatut"  id=idPermacat">
+        {% if request.user.is_permacat%}
+                      <a class="dropdown-item" href="?permacat=True">Permacat</a>
+        {%endif%}
+        {% if request.user.is_rtg %}
+                      <a class="dropdown-item" href="?permacat=True">Ramène Ta Graine</a>
+        {%endif%}
+                      <a class="dropdown-item" href="?permacat=False">Public</a>
+                </div>
+            </li>
+        {%endif%}
+
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle btn-block btn-light" type="button" id="menuOrdreTri" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Trier par...
+           </button>
+                <div class="dropdown-menu"  aria-labelledby="menuOrdreTri"  id="idOrdreTri">
+                {% for ordre in ordreTriPossibles %}
+                 <a class="dropdown-item"  href="?{{ request.GET.urlencode }}&ordre={{ordre}}">{{ordre}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <button class="btn dropdown-toggle btn-block btn-light" type="button" id="menuDistance" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Rayon...
+           </button>
+                <div class="dropdown-menu"  aria-labelledby="menuDistance"  id="idDistance">
+                {% for distance in distancePossibles %}
+                 <a class="dropdown-item"  href="?{{ request.GET.urlencode }}&distance={{distance}}">{{distance}} km</a>
+                    {% endfor %}
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+{% if user.is_authenticated %}
+<div class="row justify-content-center">
+    <div class="col-sm-12 textcenter">
+    <a href="{% url 'produit_proposer_entree' %}">
+        <button type="button" class="btn btn-success">
+            <i class="fa fa-plus"></i> Ajouter une annonce
+        </button>
+    </a>
+        &nbsp;
+        <a href="{% url 'suivre_produits' %}">
+        {% if request.user|is_following:suivi %}
+        <button type="button" class="btn btn-light btn-sm" data-toggle="tooltip" data-placement="bottom" title="Vous êtes abonné : Cliquez ici pour arrêter de recevoir un mail à chaque nouvelle annonce">
+             {% fontawesome_icon 'bell' %}
+        </button>
+        {% else %}
+        <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Vous n'êtes pas abonné : Cliquez ici  pour recevoir un mail à chaque nouvelle annonce">
+             {% fontawesome_icon 'bell-slash' %}
+        </button>
+        {% endif %}
+            </a>
+    </div>
+</div>
+{%endif%}
+
+
+{%endblock subtitle%}
+{% block content %}
+
+<div class="card-deck listOffres infinite-container">
+    {% for produit in produits_list %}
+        {% include "bourseLibre/produit_template3.html" with produit=produit %}
+    {% endfor %}
+</div>
+
+    {%if not request.user.is_permacat %}
+<p class="textcenter"><small>(vous n'avez pas encore accès aux offres "Permacat"... Rejoignez-nous !)</small></p>
+    {%endif%}
+{%include 'pagination.html' %}
+
+
+{% endblock %}

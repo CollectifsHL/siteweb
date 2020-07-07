@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: django-infinite-scroll-pagination
+Version: 0.2.0
+Summary: infinite-scroll-pagination is a Django app that implements the *seek method* for scalable pagination..
+Home-page: https://github.com/nitely/django-infinite-scroll-pagination
+Author: Esteban Castro Borsani
+Author-email: ecastroborsani@gmail.com
+License: MIT License
+Description: For more info, go to: https://github.com/nitely/django-infinite-scroll-pagination
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
