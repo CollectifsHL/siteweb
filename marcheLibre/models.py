@@ -66,8 +66,8 @@ class Choix():
 
     statut_adhesion = (('', '-----------'),
                      (0, _("Je souhaite devenir membre de l'association 'CollectifsHL' et utiliser le site")),
-                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre de l'association CollectifsHL")),
-                    (2, _("Je suis déjà membre de l'association CollectifsHL")))
+                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre du collectif des Collectifs HL")),
+                    (2, _("Je suis déjà membre du Collectif")))
 
     statut_adhesion_rtg = (('', '-----------'),
                      (0, _("Je souhaite devenir membre de l'association 'Ramene Ta Graine' et utiliser le site")),

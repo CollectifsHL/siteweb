@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profil',
             name='statut_adhesion',
-            field=models.IntegerField(choices=[('', '-----------'), (0, "Je souhaite devenir membre de l'association 'CollectifsHL' et utiliser le site"), (1, "Je souhaite utiliser le site, mais ne pas devenir membre de l'association CollectifsHL"), (2, "Je suis déjà membre de l'association CollectifsHL")], default='0'),
+            field=models.IntegerField(choices=[('', '-----------'), (0, "Je souhaite devenir membre de l'association 'CollectifsHL' et utiliser le site"), (1, "Je souhaite utiliser le site, mais ne pas devenir membre de les collectifs Hameaux Légers"), (2, "Je suis déjà membre de les collectifs Hameaux Légers")], default='0'),
         ),
         migrations.CreateModel(
             name='MessageGeneralRTG',
