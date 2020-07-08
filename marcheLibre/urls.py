@@ -44,7 +44,6 @@ urlpatterns = [
     url(r'^faq/$', views.faq, name='faq'),
     url(r'^gallerie/$', views.gallerie, name='gallerie'),
     url(r'^collectifshl/admin/$', views.admin_asso, name='admin_asso'),
-    url(r'^RTG/admin/$', views.admin_asso_rtg, name='admin_asso_rtg'),
     url(r'^collectifshl/fichiers/$', views.telechargements_asso, name='telechargements_asso'),
     url(r'^collectifshl/adhesion_asso/$', views.adhesion_asso, name='adhesion_asso'),
     url(r'^notifications/$', views.notifications, name='notifications'),
@@ -56,7 +55,6 @@ urlpatterns = [
     url(r'^collectifshl/presentation/$', views.presentation_asso, name='presentation_asso'),
     url(r'^site/presentation/$', views.presentation_site, name='presentation_site'),
     url(r'^collectifshl/statuts/$', views.statuts, name='statuts'),
-    url(r'^ramenetagraine/statuts/$', views.statuts_rtg, name='statuts_rtg'),
 
     url(r'^gestion/', admin.site.urls, name='admin',),
     url(r'^merci/$', views.merci, name='merci'),
@@ -90,17 +88,13 @@ urlpatterns = [
     #url(r'^agenda/$', views.agenda, name='agenda',),
     url(r'^cooperateurs/annuaire/$', login_required(views.annuaire), name='annuaire',),
     url(r'^cooperateurs/listeContacts/$', login_required(views.listeContacts), name='listeContacts',),
-    url(r'^cooperateurs/listeContacts_rtg/$', login_required(views.listeContacts_rtg), name='listeContacts_rtg',),
-    url(r'^cooperateurs/listeFollowers/$', login_required(views.listeFollowers), name='listeFollowers',),
+     url(r'^cooperateurs/listeFollowers/$', login_required(views.listeFollowers), name='listeFollowers',),
     url(r'^cooperateurs/annuaire_collectifshl/$', login_required(views.annuaire_collectifshl), name='annuaire_collectifshl',),
-    url(r'^cooperateurs/annuaire_rtg/$', login_required(views.annuaire_rtg), name='annuaire_rtg',),
     url(r'^cooperateurs/carte/$', login_required(views.carte), name='carte',),
     url(r'^cooperateurs/carte_collectifshl/$', login_required(views.carte_collectifshl), name='carte_collectifshl',),
-    url(r'^cooperateurs/carte_rtg/$', login_required(views.carte_rtg), name='carte_rtg',),
 
     url(r'^cooperateurs/contacter_newsletter/$', login_required(views.contacter_newsletter), name='contacter_newsletter',),
     url(r'^cooperateurs/contacter_adherents/$', login_required(views.contacter_adherents), name='contacter_adherents',),
-    url(r'^cooperateurs/contacter_adherents_rtg/$', login_required(views.contacter_adherents_rtg), name='contacter_adherents_rtg',),
 
     url(r'^marcheLibre/proposer/(?P<type_produit>[-A-Za-z]+)/$', login_required(views.produit_proposer), name='produit_proposer', ),
     url(r'^marcheLibre/proposer/', login_required(views.proposerProduit_entree), name='produit_proposer_entree',),
@@ -144,7 +138,6 @@ urlpatterns = [
 
     url(r'^agora/$', login_required(views.agora), name='agora_general'),
     url(r'^agora_collectifshl/$', login_required(views.agora_collectifshl), name='agora_collectifshl'),
-    url(r'^agora_rtg/$', login_required(views.agora_rtg), name='agora_rtg'),
 
     url(r'^activity/', include('actstream.urls')),
 

@@ -11,11 +11,10 @@ class AtelierForm(forms.ModelForm):
 
     class Meta:
         model = Atelier
-        fields = ['titre', 'statut', 'categorie', 'referent', 'description', 'materiel', 'outils', 'date_atelier','heure_atelier','duree_prevue', 'tarif_par_personne']
+        fields = ['titre', 'statut', 'categorie', 'referent', 'description', 'materiel', 'date_atelier','heure_atelier','duree_prevue', 'tarif_par_personne']
         widgets = {
             'description': SummernoteWidget(),
             'materiel': SummernoteWidget(),
-            'outils': SummernoteWidget(),
             'date_atelier': forms.DateInput(attrs={'type':"date"}),
             'heure_atelier': forms.TimeInput(attrs={'type':"time", },format='%H:%M'),
             'duree_prevue': forms.TimeInput(attrs={'type':"time", },format='%H:%M'),
@@ -61,11 +60,10 @@ class AtelierChangeForm(forms.ModelForm):
 
     class Meta:
         model = Atelier
-        fields = [ 'titre', 'statut', 'categorie','referent', 'description', 'materiel', 'outils','date_atelier',  'heure_atelier', 'duree_prevue', 'tarif_par_personne', ]
+        fields = [ 'titre', 'statut', 'categorie','referent', 'description', 'materiel', 'date_atelier',  'heure_atelier', 'duree_prevue', 'tarif_par_personne', ]
         widgets = {
             'description': SummernoteWidget(),
             'materiel': SummernoteWidget(),
-            'outils': SummernoteWidget(),
             'date_atelier': forms.DateInput(),
             'heure_atelier': forms.TimeInput(attrs={'type':"time", },format='%H:%M'),
             'duree_prevue': forms.TimeInput(attrs={'type':"time", },format='%H:%M'),

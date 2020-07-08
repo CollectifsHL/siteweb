@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Produit, Produit_aliment, Produit_objet, Produit_service, Produit_vegetal, Adresse, Profil, Message, MessageGeneral, Choix, MessageGeneralCollectifsHL, MessageGeneralRTG, InscriptionNewsletter
+from .models import Produit, Produit_aliment, Produit_objet, Produit_service, Produit_vegetal, Adresse, Profil, Message, MessageGeneral, Choix, MessageGeneralCollectifsHL, InscriptionNewsletter
 from marcheLibre.captcha_local.fields import CaptchaField
 #from tinymce.widgets import TinyMCE
 from django_summernote.widgets import SummernoteWidget
@@ -212,12 +212,11 @@ class ProducteurChangeForm_admin(UserChangeForm):
     pseudo_june = forms.CharField(label="pseudo_june",required=False)
 
     statut_adhesion = forms.ChoiceField(choices=Choix.statut_adhesion)
-    statut_adhesion_rtg = forms.ChoiceField(choices=Choix.statut_adhesion_rtg)
     password = None
 
     class Meta:
         model = Profil
-        fields = ['username', 'email', 'description', 'competences', 'inscrit_newsletter', 'statut_adhesion', 'statut_adhesion_rtg', 'pseudo_june', 'accepter_annuaire', 'cotisation_a_jour', 'is_jardinpartage']
+        fields = ['username', 'email', 'description', 'competences', 'inscrit_newsletter', 'statut_adhesion', 'pseudo_june', 'accepter_annuaire', 'cotisation_a_jour', 'is_jardinpartage']
 
     def __init__(self, *args, **kwargs):
         super(ProducteurChangeForm_admin, self).__init__(*args, **kwargs)
@@ -289,15 +288,6 @@ class MessageGeneralCollectifsHLForm(forms.ModelForm):
             'message': SummernoteWidgetWithCustomToolbar(),
             }
 
-class MessageGeneralRTGForm(forms.ModelForm):
-
-    class Meta:
-        model = MessageGeneralRTG
-        exclude = ['auteur']
-
-        widgets = {
-            'message': SummernoteWidgetWithCustomToolbar(),
-            }
 
 class MessageChangeForm(forms.ModelForm):
 

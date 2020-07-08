@@ -39,10 +39,10 @@ class Calendar(LocaleTextCalendar):
     # filter events by day
     def formatday(self, request, day, weekday, events_arti, events_arti_jardin, events_proj, events_atel, events_autre, events_autre_jardin):
         events_per_day_arti = events_arti.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day))
-        events_per_day_arti_jardin = events_arti_jardin.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day))
+        events_per_day_arti_jardin = events_arti_jardin.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day)) if events_arti_jardin else []
         events_per_day_proj = events_proj.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day))
         events_per_day_autre = events_autre.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day))
-        events_per_day_autre_jardin = events_autre_jardin.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day))
+        events_per_day_autre_jardin = events_autre_jardin.filter(Q(start_time__day=day) | Q(start_time__day__lt=day, end_time__day__gte=day)) if events_autre_jardin else []
         events_per_day_atel = events_atel.filter(Q(date_atelier__day=day))
 
         d = ''
@@ -57,7 +57,7 @@ class Calendar(LocaleTextCalendar):
         for event in events_per_day_proj:
             if event.estPublic or (not request.user.is_anonymous and request.user.is_collectifshl):
                 titre = event.titre if len(event.titre)<40 else event.titre[:37] + "..."
-                d += "<div class='event'>  <a href='"+event.get_absolute_url() +"'><i class='fa fa-paper-plane iconleft' ></i> "+titre+'</a> </div>'
+                d += "<div class='event'>  <a href='"+event.get_absolute_url() +"'><i class='fa fa-folder-open iconleft iconleft' ></i> "+titre+'</a> </div>'
         for event in events_per_day_atel:
             titre = event.titre if len(event.titre)<40 else event.titre[:37] + "..."
             d += "<div class='event'> <a href='"+event.get_absolute_url() +"'><i class='fa fa-wrench iconleft' ></i> "+titre+'</a> </div>'
@@ -88,8 +88,8 @@ class Calendar(LocaleTextCalendar):
         #d += ajoutPlus
         if day != 0:
             ajout=""
-            if weekday == 0:
-                ajout= "<div class='event'>  <a href='/forum/article/visioconference'> <i class='fa fa-comments' ></i> Visioconférence</a> </div>"
+            #if weekday == 0:
+            #    ajout= "<div class='event'>  <a href='/forum/article/visioconference'> <i class='fa fa-comments' ></i> Visioconférence</a> </div>"
 
             if aujourdhui == 1:
                 return "<td "+style+" class='day'><span class=' badge badge-success joursemaine'>"+self.getJourFrançais(weekday) + " " + str(day)+ "</span><span class='datecourante'>"+str(day)+'</span>'+ajout + str(d)+'</td>'

@@ -69,11 +69,6 @@ class Choix():
                     (1, _("Je souhaite utiliser le site, mais ne pas devenir membre du collectif des Collectifs Hameaux Legers")),
                     (2, _("Je suis déjà membre du Collectif")))
 
-    statut_adhesion_rtg = (('', '-----------'),
-                     (0, _("Je souhaite devenir membre du collectif 'Ramene Ta Graine' et utiliser le site")),
-                    (1, _("Je souhaite utiliser le site, mais ne pas devenir membre du collectif RTG")),
-                    (2, _("Je suis déjà membre du collectif Ramene Ta Graine")))
-
 def get_categorie_from_subcat(subcat):
     for type_produit, dico in Choix.choix.items():
         if str(subcat) in dico['souscategorie']:
@@ -156,7 +151,6 @@ class Profil(AbstractUser):
 
     inscrit_newsletter = models.BooleanField(verbose_name="J'accepte de recevoir des emails de CollectifsHL", default=False)
     statut_adhesion = models.IntegerField(choices=Choix.statut_adhesion, default="0")
-    statut_adhesion_rtg = models.IntegerField(choices=Choix.statut_adhesion_rtg, default="0")
     cotisation_a_jour = models.BooleanField(verbose_name="Cotisation à jour", default=False)
     accepter_conditions = models.BooleanField(verbose_name="J'ai lu et j'accepte les conditions d'utilisation du site", default=False, null=False)
     accepter_annuaire = models.BooleanField(verbose_name="J'accepte d'apparaitre dans l'annuaire du site et la carte et rend mon profil visible par tous", default=True)
@@ -208,18 +202,8 @@ class Profil(AbstractUser):
         elif self.statut_adhesion == 2:
             return "membre actif"
 
-    @property
-    def statutMembre_rtg(self):
-        return self.statut_adhesion_rtg
 
-    @property
-    def statutMembre_rtg_str(self):
-        if self.statut_adhesion_rtg == 0:
-            return "souhaite devenir membre du collectif"
-        elif self.statut_adhesion_rtg == 1:
-            return "ne souhaite pas devenir membre"
-        elif self.statut_adhesion_rtg == 2:
-            return "membre actif"
+
     @property
     def is_collectifshl(self):
         if self.statut_adhesion == 2:
@@ -227,12 +211,6 @@ class Profil(AbstractUser):
         else:
             return False
 
-    @property
-    def is_rtg(self):
-        if self.statut_adhesion_rtg == 2:
-            return True
-        else:
-            return False
 
     @property
     def cotisation_a_jour_str(self):
@@ -946,25 +924,6 @@ class MessageGeneralCollectifsHL(models.Model):
     def get_absolute_url(self):
         return  reverse('agora_collectifshl')
 
-
-class MessageGeneralRTG(models.Model):
-    message = models.TextField(null=False, blank=False)
-    auteur = models.ForeignKey(Profil, on_delete=models.CASCADE)
-    date_creation = models.DateTimeField(auto_now_add=True)
-
-    def __unicode__(self):
-        return self.__str__()
-
-    def __str__(self):
-        return "(" + str(self.id) + ") " + str(self.auteur) + " " + str(self.date_creation)
-
-    @property
-    def get_edit_url(self):
-        return reverse('modifierMessage',  kwargs={'id':self.id, 'type':'rtg'})
-
-    @property
-    def get_absolute_url(self):
-        return  reverse('agora_rtg')
 
 class Suivis(models.Model):
     nom_suivi = models.TextField(null=False, blank=False)

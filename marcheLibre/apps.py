@@ -14,7 +14,6 @@ class MarcheLibreConfig(AppConfig):
         registry.register(self.get_model('Profil'))
         registry.register(self.get_model('MessageGeneral'))
         registry.register(self.get_model('MessageGeneralCollectifsHL'))
-        registry.register(self.get_model('MessageGeneralRTG'))
         registry.register(self.get_model('Produit'))
         registry.register(self.get_model('Conversation'))
         registry.register(self.get_model('Produit'))

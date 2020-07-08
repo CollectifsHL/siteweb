@@ -13,31 +13,29 @@ from marcheLibre.settings import SERVER_EMAIL, DEBUG
 class Choix():
     statut_projet = ('prop','Proposition de projet'), ("AGO","Fiche projet soumise à l'AGO"), ('vote','Soumis au vote'), ('accep',"Accepté par l'association"), ('refus',"Refusé par l'association" ),
     type_projet = ('Part','Participation à un évènement'), ('AGO',"Organisation d'une AGO"), ('Projlong','Projet a long terme'), ('Projcourt','Projet a court terme'), ('Projponct','Projet ponctuel'),
-    type_annonce = ('Altermarché','Altermarché'), ('Annonce','Annonce'), ('Administratif','Administratif'), ('Agenda','Agenda'), ('Jardi','Jardi per tots'), ('Chantier','Chantier participatif'),\
-                   ('Documentation','Documentation'), ('Ecovillage', 'Ecovillage'), \
-                    ('Point', 'Point de vue'), ('KitPerma', 'Kit Perma Ecole'),   ('Recette', 'Recette'), \
-                    ('Jardin','Jardins partagés'), ('Autre','Autre'),
+    type_annonce = ('6','Altermarché'), ('1','Annonce'), ('2','Administratif'), ('3','Agenda'), ('4','Chantier participatif'),\
+                   ('5','Documentation'),  ('0','Autre'),
     couleurs_annonces = {
        # 'Annonce':"#e0f7de", 'Administratif':"#dcc0de", 'Agenda':"#d4d1de", 'Entraide':"#cebacf",
        # 'Chantier':"#d1ecdc",'Jardinage':"#fcf6bd", 'Recette':"#d0f4de", 'Bricolage':"#fff2a0",
        # 'Culture':"#ffc4c8", 'Bon_plan':"#bccacf", 'Point':"#87bfae", 'Autre':"#bcb4b4"
 
-        'Annonce':"#d1ecdc",
-        'Administratif':"#D4CF7D",
-        'Agenda':"#E0E3AB",
-        'Entraide':"#AFE4C1",
-        'Chantier':"#fff2a0",
-        'Jardi':"#B2AFE4",
-        'Recette':"#d0f4de",
-        'KitPerma':"#caf9b7",
-        'Permaculture':"#ced2d3",
-        'Bon_plan':"#349D9B",
-        'Point':"#bccacf",
-        'Autre':"#87bfae",
-        'Ecovillage':"#cebacf",
-        'Jardin':"#fffdcc",
-        'Altermarché':"#daffb3",
-        'Documentation':'#ddd0a8',
+        '15':"#d1ecdc",
+        '1':"#D4CF7D",
+        '2':"#E0E3AB",
+        '3':"#AFE4C1",
+        '4':"#fff2a0",
+        '5':"#B2AFE4",
+        '6':"#d0f4de",
+        '7':"#caf9b7",
+        '8':"#ced2d3",
+        '9':"#349D9B",
+        '10':"#bccacf",
+        '0':"#87bfae",
+        '11':"#cebacf",
+        '12':"#fffdcc",
+        '13':"#daffb3",
+        '14':'#ddd0a8',
 
 
 

@@ -8,11 +8,11 @@ from django.shortcuts import HttpResponseRedirect, render, redirect#, render, ge
 
 from .forms import Produit_aliment_CreationForm, Produit_vegetal_CreationForm, Produit_objet_CreationForm, \
     Produit_service_CreationForm, ContactForm, AdresseForm, ProfilCreationForm, MessageForm, MessageGeneralForm, \
-    ProducteurChangeForm, MessageGeneralCollectifsHLForm, MessageGeneralRTGForm, Produit_aliment_modifier_form, Produit_service_modifier_form, \
+    ProducteurChangeForm, MessageGeneralCollectifsHLForm, Produit_aliment_modifier_form, Produit_service_modifier_form, \
     Produit_objet_modifier_form, Produit_vegetal_modifier_form, ChercherConversationForm, InscriptionNewsletterForm, \
     MessageChangeForm, ContactMailForm
 from .models import Profil, Produit, Adresse, Choix, Panier, Item, get_categorie_from_subcat, Conversation, Message, \
-    MessageGeneral, MessageGeneralCollectifsHL, MessageGeneralRTG, getOrCreateConversation, Suivis, InscriptionNewsletter
+    MessageGeneral, MessageGeneralCollectifsHL, getOrCreateConversation, Suivis, InscriptionNewsletter
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
@@ -113,10 +113,6 @@ def faq(request):
 
 def statuts(request):
     return render(request, 'statuts.html')
-
-def statuts_rtg(request):
-    return render(request, 'statuts_rtg.html')
-
 
 @login_required
 def produit_proposer(request, type_produit):
@@ -255,15 +251,6 @@ def annuaire_collectifshl(request):
     return render(request, 'annuaire_collectifshl.html', {'profils':profils_collectifshl,"nb_profils": nb_profils } )
 
 @login_required
-def annuaire_rtg(request):
-    if not request.user.is_rtg:
-        return render(request, "notRTG.html")
-
-    profils_collectifshl = Profil.objects.filter(accepter_annuaire=True, statut_adhesion_rtg=2).order_by('username')
-    nb_profils = len(Profil.objects.filter(statut_adhesion_rtg=2))
-    return render(request, 'annuaire_rtg.html', {'profils':profils_collectifshl,"nb_profils": nb_profils } )
-
-@login_required
 def listeContacts(request):
     if not request.user.is_collectifshl:
         return render(request, "notMembre.html")
@@ -275,17 +262,6 @@ def listeContacts(request):
     ]
     return render(request, 'listeContacts.html', {"listeMails":listeMails})
 
-@login_required
-def listeContacts_rtg(request):
-    if not request.user.is_rtg:
-        return render(request, "notRTG.html")
-    listeMails = [
-        {"type":'user_newsletter' ,"profils":Profil.objects.filter(inscrit_newsletter=True), "titre":"Liste des inscrits à la newsletter : "},
-        {"type":'anonym_newsletter' ,"profils":InscriptionNewsletter.objects.all(), "titre":"Liste des inscrits anonymes à la newsletter : "},
-        {"type":'user_adherent' , "profils":Profil.objects.filter(statut_adhesion_rtg=2), "titre":"Liste des adhérents : "},
-        {"type":'user_futur_adherent', "profils":Profil.objects.filter(statut_adhesion_rtg=0), "titre":"Liste des personnes qui veulent adhérer à CollectifsHL :"}
-    ]
-    return render(request, 'listeContacts.html', {"listeMails":listeMails})
 @login_required
 def listeFollowers(request):
     if not request.user.is_collectifshl:
@@ -324,15 +300,6 @@ def admin_asso(request):
     ]
     return render(request, 'asso/admin_asso.html', {"listeFichers":listeFichers} )
 
-@login_required
-def admin_asso_rtg(request):
-    if not request.user.is_rtg:
-        return render(request, "notRTG.html")
-
-    listeFichers = [
-    ]
-    return render(request, 'asso/admin_asso_rtg.html', {"listeFichers":listeFichers} )
-
 def presentation_asso(request):
     return render(request, 'asso/presentation_asso.html')
 
@@ -360,13 +327,6 @@ def carte_collectifshl(request):
         return render(request, "notMembre.html")
     profils = Profil.objects.filter(statut_adhesion=2, accepter_annuaire=1)
     return render(request, 'carte_cooperateurs.html', {'profils':profils, 'titre': "Carte des adhérents CollectifsHL*" } )
-
-@login_required
-def carte_rtg(request):
-    if not request.user.is_rtg:
-        return render(request, "notRTG.html")
-    profils = Profil.objects.filter(statut_adhesion_rtg=2, accepter_annuaire=1)
-    return render(request, 'carte_cooperateurs_rtg.html', {'profils':profils, 'titre': "Carte des adhérents Ramène Ta Graine*" } )
 
 @login_required
 def profil_contact(request, user_id):
@@ -672,6 +632,7 @@ def cgu(request):
 @login_required
 def liens(request):
     liens = [
+        'https://www.hameaux-legers.org/',
         'https://www.balotilo.org/',
         'https://colibris-universite.org/mooc-permaculture/wakka.php?wiki=PagePrincipale',
         'https://www.monnaielibreoccitanie.org/',
@@ -1034,26 +995,6 @@ def agora_collectifshl(request, ):
     return render(request, 'agora_collectifshl.html', {'form': form, 'messages_echanges': messages})
 
 
-@login_required
-def agora_rtg(request, ):
-    if not request.user.is_rtg:
-        return render(request, "notRTG.html")
-    messages = MessageGeneralRTG.objects.all().order_by("date_creation")
-    form = MessageGeneralRTGForm(request.POST or None)
-    if form.is_valid():
-        message = form.save(commit=False)
-        message.auteur = request.user
-
-        message.save()
-        group, created = Group.objects.get_or_create(name='rtg')
-        url = reverse('agora_rtg')
-        action.send(request.user, verb='envoi_salon_rtg', action_object=message, target=group, url=url,
-                    description="a envoyé un message dans le salon RameneTaGraine")
-
-
-        return redirect(request.path)
-    return render(request, 'agora_rtg.html', {'form': form, 'messages_echanges': messages})
-
 
 # class ServiceWorkerView(View):
 #     def get(self, request, *args, **kwargs):
@@ -1180,36 +1121,6 @@ def contacter_adherents(request):
     return render(request, 'contact/contact_adherents.html', {'form': form, })
 
 
-@login_required
-def contacter_adherents_rtg(request):
-    if not request.user.is_rtg:
-        return render(request, "notRTG.html")
-    if request.method == 'POST':
-        form = ContactForm(request.POST or None, )
-        if form.is_valid():
-            sujet = "[RTG] Newsletter - " +  form.cleaned_data['sujet']
-            message = form.cleaned_data['msg']
-            emails = [profil.email for profil in Profil.objects.filter(statut_adhesion_rtg=2)]
-
-            try:
-                send_mass_mail([(sujet, message, SERVER_EMAIL, emails), ])
-            except:
-                sujet = "[collectifshl admin] Erreur lors de l'envoi du mail"
-                message_txt = message + '\n'.join(emails)
-
-                try:
-                    mail_admins(sujet, message_txt)
-                except:
-                    print("erreur de la fonction contacterAdherents (views.py)")
-                    pass
-            return render(request, 'contact/message_envoye.html', {'sujet': form.cleaned_data['sujet'], 'msg': message,
-                                                           'envoyeur': request.user.username + " (" + request.user.email + ")",
-                                                           "destinataires": emails})
-    else:
-        form = ContactForm()
-    return render(request, 'contact/contact_adherents_rtg.html', {'form': form, })
-
-
 
 @login_required
 def modifier_message(request, id, type):
@@ -1219,10 +1130,7 @@ def modifier_message(request, id, type):
         if not request.user.is_collectifshl:
             return render(request, "notCollectifsHL")
         obj = MessageGeneralCollectifsHL.objects.get(id=id)
-    elif type == 'rtg':
-        if not request.user.is_rtg:
-            return render(request, "notRTG.html")
-        obj = MessageGeneralRTG.objects.get(id=id)
+
 
 
     elif type == 'conversation':
