@@ -13,8 +13,8 @@ from marcheLibre.settings import SERVER_EMAIL, DEBUG
 class Choix():
     statut_projet = ('prop','Proposition de projet'), ("AGO","Fiche projet soumise à l'AGO"), ('vote','Soumis au vote'), ('accep',"Accepté par l'association"), ('refus',"Refusé par l'association" ),
     type_projet = ('Part','Participation à un évènement'), ('AGO',"Organisation d'une AGO"), ('Projlong','Projet a long terme'), ('Projcourt','Projet a court terme'), ('Projponct','Projet ponctuel'),
-    type_annonce = ('6','Altermarché'), ('1','Annonce'), ('2','Administratif'), ('3','Agenda'), ('4','Chantier participatif'),\
-                   ('5','Documentation'),  ('0','Autre'),
+    type_annonce = ('1','Annonce'), ('2','Administratif'), ('3','Agenda'), ('4','Chantier participatif'), ('6','Altermarché'), \
+                   ('5','Ressources'),  ('0','Autre'),
     couleurs_annonces = {
        # 'Annonce':"#e0f7de", 'Administratif':"#dcc0de", 'Agenda':"#d4d1de", 'Entraide':"#cebacf",
        # 'Chantier':"#d1ecdc",'Jardinage':"#fcf6bd", 'Recette':"#d0f4de", 'Bricolage':"#fff2a0",
