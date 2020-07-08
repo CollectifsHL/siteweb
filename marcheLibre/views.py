@@ -637,7 +637,7 @@ def liens(request):
         'http://soudaqui.cat/wordpress/',
         'https://framasoft.org',
         'https://alternatiba.eu/alternatiba66/',
-        'http://www.le-message.org/?lang=fr',
+        'http://www.le-message.org/',
         'https://reporterre.net/',
         'https://la-bas.org/',
     ]
