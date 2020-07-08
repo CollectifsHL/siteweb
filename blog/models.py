@@ -32,6 +32,7 @@ class Choix():
         '9':"#349D9B",
         '10':"#bccacf",
         '0':"#87bfae",
+        'Autre':"#87bfae",
         '11':"#cebacf",
         '12':"#fffdcc",
         '13':"#daffb3",
