@@ -742,7 +742,11 @@ def lireConversation(request, destinataire):
         if profil_destinataire in followers(suivi):
             sujet = "[CollectifsHL] quelqu'un vous a envoyé une message privé"
             message = request.user.username + " vous a envoyé un message privé. Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" +  url
-            send_mail(sujet, message, SERVER_EMAIL, [profil_destinataire.email, ], fail_silently=False,)
+            try:
+                send_mail(sujet, message, SERVER_EMAIL, [profil_destinataire.email, ], fail_silently=False,)
+            except Exception as inst:
+                mail_admins("erreur mails",
+                        sujet + "\n" + message + "\n xxx \n" + str(profil_destinataire.email) + "\n erreur : " + str(inst))
         return redirect(request.path)
 
     return render(request, 'lireConversation.html', {'conversation': conversation, 'form': form, 'messages_echanges': messages, 'destinataire':destinataire})
