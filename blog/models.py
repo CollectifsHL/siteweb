@@ -87,8 +87,7 @@ class Article(models.Model):
             if sendMail:
                 suivi, created = Suivis.objects.get_or_create(nom_suivi='articles')
                 titre = "[CollectifsHL] nouvel article"
-                message = " Un nouvel article a été créé " + \
-                          "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.get_absolute_url() + \
+                message = " Un nouvel article a été créé : https://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                           "\n\n------------------------------------------------------------------------------" \
                           "\n vous recevez cet email, car vous avez choisi de suivre les articles (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com/forum/articles/"
                 emails = [suiv.email for suiv in followers(suivi) if
@@ -101,8 +100,7 @@ class Article(models.Model):
         else:
             if sendMail:
                 titre = "[CollectifsHL] Article actualisé"
-                message = "L'article '" + self.titre + "' a été modifié" + \
-                          "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + self.get_absolute_url() + \
+                message = "L'article '" + self.titre + "' a été modifié : http://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                           "\n\n------------------------------------------------------------------------------" \
                           "\n vous recevez cet email, car vous avez choisi de suivre cet article sur le site http://collectifshl.herokuapp.com/forum/articles/"
 
@@ -171,10 +169,9 @@ class Commentaire(models.Model):
             self.date_creation = timezone.now()
             suivi, created = Suivis.objects.get_or_create(nom_suivi='articles')
             titre = "[CollectifsHL] Article commenté"
-            message = " Un article auquel vous êtes abonné a été commenté " + \
-                      "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.article.get_absolute_url() + \
+            message = " Un article auquel vous êtes abonné a été commenté : https://collectifshl.herokuapp.com" + self.article.get_absolute_url() + \
                       "\n\n------------------------------------------------------------------------------" \
-                      "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com/forum/articles/" + self.article.get_absolute_url()
+                      "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com" + self.article.get_absolute_url()
             emails = [suiv.email for suiv in followers(self.article) if
                       self.auteur_comm != suiv and (self.article.estPublic or suiv.is_collectifshl)]
             if emails and not DEBUG:
@@ -228,8 +225,7 @@ class Projet(models.Model):
         if not self.id:
             self.date_creation = timezone.now()
             titre = "[CollectifsHL] Nouveau Projet !"
-            message = " Le projet '" +  self.titre + "' a été créé"+ \
-                      "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.get_absolute_url() + \
+            message = " Le projet '" +  self.titre + "' a été créé : https://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                       "\n\n------------------------------------------------------------------------------" \
                       "\n vous recevez cet email, car vous avez choisi de suivre ce projet sur le site http://collectifshl.herokuapp.com/forum/projets/"
             suivi, created = Suivis.objects.get_or_create(nom_suivi='projets')
@@ -243,8 +239,7 @@ class Projet(models.Model):
         else:
             if sendMail:
                 titre = "[CollectifsHL] Projet actualisé"
-                message = "Le projet '" + self.titre + "' a été modifié" + \
-                          "\n Vous pouvez y accéder en suivant ce lien : http://collectifshl.herokuapp.com" + self.get_absolute_url() + \
+                message = "Le projet '" + self.titre + "' a été modifié : http://collectifshl.herokuapp.com" + self.get_absolute_url() + \
                           "\n\n------------------------------------------------------------------------------" \
                           "\n vous recevez cet email, car vous avez choisi de suivre ce projet sur le site http://collectifshl.herokuapp.com/forum/articles/"
 
@@ -288,8 +283,7 @@ class CommentaireProjet(models.Model):
         ''' On save, update timestamps '''
         if not self.id:
             titre = "[CollectifsHL] Projet commenté"
-            message = "Le projet '"+ self.projet.titre + "' auquel vous êtes abonné a été commenté " + \
-                      "\n Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" + self.projet.get_absolute_url() + \
+            message = "Le projet '"+ self.projet.titre + "' auquel vous êtes abonné a été commenté : https://collectifshl.herokuapp.com" + self.projet.get_absolute_url() + \
                       "\n\n------------------------------------------------------------------------------" \
                       "\n vous recevez cet email, car vous avez choisi de suivre l'article (en cliquant sur la cloche) sur le site http://collectifshl.herokuapp.com/forum/articles/" + self.projet.get_absolute_url()
 
