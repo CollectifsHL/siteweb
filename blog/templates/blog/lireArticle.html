@@ -104,6 +104,8 @@
         {% endif %}
 
         {%if article.auteur == request.user or article.estPublic or request.user.is_collectifshl %}
+
+        {%if dates %}
             <button type="button" class="btn" data-toggle="modal" data-target="#dates">
              </h5 class="textcenter">{% fontawesome_icon 'calendar' %} Dates {%if article.start_time %}supplémentaires{%endif%}</h5>
             </button>
@@ -132,7 +134,12 @@
                 </div>
               </div>
             </div>
+        {% else %}
+            {%if article.auteur == request.user or article.estModifiable %}
+              <a class="btn btn-info" href="{% url 'blog:ajouterEvenementArticle' id=article.id %}" ><i class="fa fa-plus"></i> date</a>
+            {% endif %}
 
+        {% endif %}
         {% endif %}
 
         {% if actions %}

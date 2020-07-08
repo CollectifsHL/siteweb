@@ -738,7 +738,8 @@ def lireConversation(request, destinataire):
         action.send(request.user, verb='envoi_salon_prive', action_object=conversation, url=url, group=destinataire,
                     description="a envoyé un message privé à " + destinataire)
         profil_destinataire = Profil.objects.get(username=destinataire)
-        if profil_destinataire in followers(conversation):
+        suivi, created = Suivis.objects.get_or_create(nom_suivi='conversations')
+        if profil_destinataire in followers(suivi):
             sujet = "[CollectifsHL] quelqu'un vous a envoyé une message privé"
             message = request.user.username + " vous a envoyé un message privé. Vous pouvez y accéder en suivant ce lien : https://collectifshl.herokuapp.com" +  url
             send_mail(sujet, message, SERVER_EMAIL, [profil_destinataire.email, ], fail_silently=False,)
@@ -768,7 +769,8 @@ class ListeConversations(ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
 
-        context['conversations'] = Conversation.objects.filter(Q(profil2__id=self.request.user.id) | Q(profil1__id=self.request.user.id)).order_by('-date_dernierMessage')
+        context['suivis'], created = Suivis.objects.get_or_create(nom_suivi="conversations")
+        context['convers'] = Conversation.objects.filter(Q(profil2__id=self.request.user.id) | Q(profil1__id=self.request.user.id)).order_by('-date_dernierMessage')
 
         return context
 
@@ -1022,18 +1024,17 @@ def agora_collectifshl(request, ):
 def suivre_conversations(request, actor_only=True):
     """
     """
-    conversations = Conversation.objects.filter(Q(profil2__id=request.user.id) | Q(profil1__id=request.user.id))
-    for conv in conversations:
-        if conv in following(request.user):
-            actions.unfollow(request.user, conv)
-        else:
-            actions.follow(request.user, conv, actor_only=actor_only)
+    suivi, created = Suivis.objects.get_or_create(nom_suivi='conversations')
+    if suivi in following(request.user):
+        actions.unfollow(request.user, suivi)
+    else:
+        actions.follow(request.user, suivi, actor_only=actor_only)
     return redirect('conversations')
 
 @login_required
 @csrf_exempt
 def suivre_produits(request, actor_only=True):
-    suivi, created = Suivis.objects.get_or_create(nom_suivi = 'produits')
+    suivi, created = Suivis.objects.get_or_create(nom_suivi='produits')
 
     if suivi in following(request.user):
         actions.unfollow(request.user, suivi)

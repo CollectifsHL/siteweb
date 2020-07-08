@@ -72,7 +72,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = ['categorie', 'titre', 'contenu', 'start_time', 'end_time', 'estPublic', 'estModifiable']
+        fields = ['categorie', 'titre', 'contenu', 'start_time', 'estPublic', 'estModifiable']
         widgets = {
             'contenu': SummernoteWidget(),
               'start_time': forms.DateInput(attrs={'type': 'date'}),
@@ -165,7 +165,7 @@ class ProjetForm(forms.ModelForm):
 
     class Meta:
         model = Projet
-        fields = ['categorie', 'coresponsable', 'titre', 'contenu', 'statut', 'estPublic', 'lien_document', 'fichier_projet', 'start_time', 'end_time',]
+        fields = ['categorie', 'coresponsable', 'titre', 'contenu', 'statut', 'estPublic', 'lien_document', 'fichier_projet', 'start_time',]
         widgets = {
         'contenu': SummernoteWidget(),
               'start_time': forms.DateInput(attrs={'type':'date'}),
@@ -204,7 +204,7 @@ class ProjetChangeForm(forms.ModelForm):
 
     class Meta:
         model = Projet
-        fields = ['categorie', 'coresponsable', 'titre', 'contenu', 'estPublic', 'lien_document','fichier_projet', 'start_time', 'end_time', 'estArchive']
+        fields = ['categorie', 'coresponsable', 'titre', 'contenu', 'estPublic', 'lien_document','fichier_projet', 'start_time', 'estArchive']
         widgets = {
             'contenu': SummernoteWidget(),
               'start_time': forms.DateInput(attrs={'class':'date', }),
@@ -249,7 +249,7 @@ class EvenementForm(forms.ModelForm):
 
     class Meta:
         model = Evenement
-        fields = ['start_time', 'titre', 'article', 'end_time', ]
+        fields = ['start_time', 'titre', 'article', ]
         widgets = {
             'start_time': forms.DateInput(attrs={'type': 'date'}),
             'end_time': forms.DateInput(attrs={'type': 'date'}),
@@ -259,7 +259,7 @@ class EvenementForm(forms.ModelForm):
 class EvenementArticleForm(forms.ModelForm):
     class Meta:
         model = Evenement
-        fields = ['start_time', 'titre', 'end_time', ]
+        fields = ['start_time', 'titre', ]
         widgets = {
             'start_time': forms.DateInput(attrs={'type': 'date'}),
             'end_time': forms.DateInput(attrs={'type': 'date'}),
