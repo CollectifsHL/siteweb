@@ -91,8 +91,9 @@ ul.errorlist > li {
     margin-bottom: 15px;
 }
 .imgbienvenue {
-width:auto; max-width:
-500px; height: auto;
+width:auto;
+max-width:500px;
+height: auto;
 max-height: 400px;
   border-radius: 5%;
 }
@@ -390,6 +391,10 @@ section.p3 {
     .navbar-light .navbar-nav .nav-link {
         color: rgba(0,0,0,.95);
     padding: 2px 2px;
+    }
+
+    .imgbienvenue {
+        width: 100%;
     }
 }
 
@@ -807,7 +812,6 @@ ul.errorlist{
     padding: 0.2px 0.2px 0.2px 0.2px;
 }
 
-
 .paddingbase{
     padding: 0.1px 0.1px 0.1px 0.1px;
 }
@@ -846,7 +850,9 @@ ul.errorlist{
    width:20rem;
    padding-bottom: 10px !important;
 }
-
+    .imgbienvenue {
+        width: 100%;
+    }
 
 .tablevotes{
     background-color: #ffffcc;
@@ -1386,6 +1392,7 @@ caption {
 	#calendar .date {
 		align-self: flex-start;
 	}
+
 }
 
 .iconleft
